@@ -176,3 +176,197 @@ python scripts/analysis/process_drawings.py
 
 ## License
 MIT License - feel free to use and modify
+
+---
+
+# Statistical and Probability Framework for Lottery Analysis
+
+## I. Core Probability Concepts
+
+### A. Basic Probability Spaces
+1. **Sample Space (Ω)**
+   - White balls: {1, 2, ..., 69}
+   - Powerball: {1, 2, ..., 26}
+   - Total possible combinations: C(69,5) × 26 = 292,201,338
+
+2. **Independent Events**
+   - Each drawing is independent
+   - P(Drawing₂|Drawing₁) = P(Drawing₂)
+   - No sequential dependency
+
+### B. Combinatorial Probability
+1. **Hypergeometric Distribution**
+   ```python
+   def hypergeometric_prob(N, K, n, k):
+       """
+       N = total numbers (69)
+       K = favorable numbers
+       n = numbers drawn (5)
+       k = successful matches
+       """
+       return comb(K, k) * comb(N-K, n-k) / comb(N, n)
+   ```
+
+2. **Expected Value Calculations**
+   ```python
+   def expected_value(probabilities, payouts, ticket_cost):
+       return sum(p * v for p, v in zip(probabilities, payouts)) - ticket_cost
+   ```
+
+## II. Statistical Analysis Framework
+
+### A. Mean Reversion Metrics
+1. **Z-Score Calculation**
+   ```python
+   def calculate_zscore(appearances, expected_freq, time_period):
+       std_dev = sqrt(expected_freq * (1 - expected_freq/69) * time_period)
+       return (appearances - expected_freq * time_period) / std_dev
+   ```
+
+2. **Bollinger Bands**
+   - Middle Band = 20-day SMA
+   - Upper Band = Middle Band + (2 × σ)
+   - Lower Band = Middle Band - (2 × σ)
+
+### B. Statistical Pressure Indicators
+
+1. **Short-term Pressure**
+   ```
+   P_short = (E_freq - A_actual) / σ_short
+   Where:
+   - E_freq = Expected frequency
+   - A_actual = Actual appearances
+   - σ_short = Short-term standard deviation
+   ```
+
+2. **Long-term Pressure**
+   ```
+   P_long = (E_total - A_total) / σ_long
+   Where:
+   - E_total = Expected total appearances
+   - A_total = Actual total appearances
+   - σ_long = Long-term standard deviation
+   ```
+
+## III. Key Statistical Tests & Metrics
+
+### A. Randomness Tests
+1. **Chi-Square Test for Uniformity**
+   ```python
+   def chi_square_test(observed_freq, expected_freq):
+       chi_square = sum((o - e)**2 / e 
+                       for o, e in zip(observed_freq, expected_freq))
+       return chi_square
+   ```
+
+2. **Runs Test**
+   ```python
+   def runs_test(sequence, median):
+       runs = len([i for i in range(1, len(sequence))
+                  if (sequence[i] >= median) != (sequence[i-1] >= median)])
+       return runs
+   ```
+
+### B. Pattern Recognition Metrics
+
+1. **Deviation from Expected Frequency**
+   ```
+   D = (O - E) / √(E * (1 - p))
+   Where:
+   - O = Observed frequency
+   - E = Expected frequency
+   - p = Probability of occurrence
+   ```
+
+2. **Pattern Significance Score**
+   ```
+   S = (Pattern_freq - Expected_freq) / σ_pattern
+   ```
+
+## IV. Regression Analysis
+
+### A. Time Series Components
+1. **Trend Analysis**
+   - Moving averages
+   - Exponential smoothing
+   - Linear regression slopes
+
+2. **Cyclical Patterns**
+   - Fourier analysis
+   - Periodogram analysis
+   - Autocorrelation functions
+
+### B. Mean Reversion Models
+1. **Ornstein-Uhlenbeck Process**
+   ```
+   dX_t = θ(μ - X_t)dt + σdW_t
+   Where:
+   - θ = Mean reversion speed
+   - μ = Long-term mean
+   - σ = Volatility
+   ```
+
+2. **Half-Life Calculation**
+   ```python
+   def calculate_half_life(theta):
+       return log(2) / theta
+   ```
+
+## V. Implementation Priorities
+
+### Phase 1: Core Statistical Measures
+1. Basic frequency analysis
+2. Z-score calculations
+3. Simple mean reversion metrics
+
+### Phase 2: Advanced Analysis
+1. Pattern recognition
+2. Time series analysis
+3. Regression models
+
+### Phase 3: Predictive Modeling
+1. Machine learning integration
+2. Neural network analysis
+3. Bayesian updating
+
+## VI. Key Statistical Assumptions
+
+1. **Independence Assumption**
+   - Drawings are independently distributed
+   - No sequential correlation
+
+2. **Stationarity**
+   - Probability structure remains constant
+   - Mean reversion is consistent
+
+3. **Normal Distribution**
+   - Frequency distributions approximate normal
+   - Z-scores are meaningful
+
+## VII. Error Measurements
+
+1. **Standard Error Calculations**
+   ```python
+   def standard_error(sample_size):
+       return sqrt(p * (1-p) / n)
+       # where p = probability, n = sample size
+   ```
+
+2. **Confidence Intervals**
+   ```python
+   def confidence_interval(mean, std_error, confidence=0.95):
+       z = norm.ppf((1 + confidence) / 2)
+       return mean ± z * std_error
+   ```
+
+## VIII. Validation Framework
+
+1. **Backtesting Protocol**
+   - Out-of-sample testing
+   - Rolling window analysis
+   - Performance metrics
+
+2. **Statistical Significance**
+   - p-value calculations
+   - Effect size measurements
+   - Power analysis
